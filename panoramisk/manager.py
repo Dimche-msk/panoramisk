@@ -294,7 +294,8 @@ def on_connect(manager: Manager):
     """
     Callback after connect
     """
-    pass
+    for _event in manager.callbacks.get("on_connect"):
+        asyncio.create_task(_event(manager, "connected"))
 
 
 # noinspection PyUnusedLocal
@@ -302,7 +303,8 @@ def on_login(manager: Manager):
     """
     Callback after login
     """
-    pass
+    for _event in manager.callbacks.get("on_login"):
+        asyncio.create_task(_event(manager, "logged in"))
 
 
 # noinspection PyUnusedLocal
@@ -310,4 +312,8 @@ def on_disconnect(manager: Manager, exc: Exception):
     """
     Callback after disconnect
     """
-    pass
+    for _event in manager.callbacks.get("on_disconnect"):
+        asyncio.create_task(_event(manager, "disconnected"))
+
+
+
